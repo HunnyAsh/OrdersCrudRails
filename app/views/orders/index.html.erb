@@ -1,0 +1,22 @@
+<h1>List Orders</h1>
+<table>
+    <thead>
+        <th>Name</th>
+        <th>Purchased By</th>
+        <th>Price</th>
+        <th colspan="3">Actions</th>
+    </thead>
+    <tbody>
+            <% @orders.each do |o| %>
+        <tr>
+            <td><%= o.name %></td>
+            <td><%= o.purchased_by %></td>
+            <td><%= o.product_price %></td>
+            <td><%= link_to  "Edit", edit_order_path(o) %></td>
+            <td><%= link_to  "Show", order_path(o) %></td>
+            <td><%= link_to  "Delete", order_path(o) , method: :delete , data: { confirm: 'Are you Sure ?' } %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+<%= link_to  "New", new_order_path %>
