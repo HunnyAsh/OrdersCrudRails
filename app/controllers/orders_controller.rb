@@ -11,7 +11,8 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.create(order_params)
+    @order = Order.create(order_params) 
+    binding.pry
     redirect_to orders_path
   end
 
@@ -35,7 +36,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(user: [:name, :purchased_by, :product_price])
+    params.require(:order).permit(:name, :purchased_by, :product_price)
   end
 
   def find_order
