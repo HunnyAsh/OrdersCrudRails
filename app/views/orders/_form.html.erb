@@ -1,14 +1,12 @@
-<h1>Update Order</h1>
-<%= form_with(model: @order,local: true) do |f| %>
+<%= form_with(model: order) do |f| %>
 	<%= f.label :name, "Name" %>
 	<%= f.text_field :name %>
 	<br><br>
-	<%= f.label :purchased_by, "Puchased by" %>
+	<%= f.label :purchased_by, "Purchased By" %>
 	<%= f.text_field :purchased_by %>
 	<br><br>
 	<%= f.label :product_price, "Price" %>
-	<%= f.number_field :product_price %>
+	<%= f.number_field (:product_price) %>
 	<br><br>
 	<%= f.submit %>
-
 <% end %>

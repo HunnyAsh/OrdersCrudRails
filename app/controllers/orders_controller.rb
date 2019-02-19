@@ -1,32 +1,30 @@
 # frozen_string_literal: true
 
 class OrdersController < ApplicationController
+  before_action :find_order, only: %i[edit destroy show update]
   def index
     @orders = Order.all
   end
 
+  def new
+    @order = Order.new
+  end
+
   def create
-    @order = Order.new(order_params)
-    @order.save
+    @order = Order.create(order_params)
     redirect_to orders_path
   end
 
-  def show
-    @order = Order.find(params[:id])
-  end
+  def show; end
 
   def destroy
-    @order = Order.find(params[:id])
     @order.destroy
     redirect_to orders_path
   end
 
-  def edit
-    @order = Order.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @order = Order.find(params[:id])
     if @order.update(order_params)
       redirect_to orders_path
     else
@@ -37,6 +35,10 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:name, :purchased_by, :product_price)
+    params.require(:order).permit(user: [:name, :purchased_by, :product_price])
+  end
+
+  def find_order
+    @order = Order.find_by(id: params[:id])
   end
 end
