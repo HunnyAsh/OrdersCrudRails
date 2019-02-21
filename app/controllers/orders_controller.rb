@@ -3,7 +3,7 @@
 class OrdersController < ApplicationController
   before_action :find_order, only: %i[edit destroy show update]
   def index
-    @orders = Order.all
+    @orders = Order.order(:name).page(params[:page]).per(2)
   end
 
   def new
@@ -11,9 +11,17 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.create(order_params) 
-    binding.pry
-    redirect_to orders_path
+    @order = Order.new(order_params)
+    begin
+      if @order.save
+        redirect_to orders_path
+      else
+        render 'new'
+      end
+    rescue StandardError => exception
+      flash[:notice] = exception
+      redirect_to(action: 'new')
+    end
   end
 
   def show; end
